@@ -1,7 +1,10 @@
-.container{}
-
-.main {
-
+.counts {
+  margin: 12px 0;
+  color: var(--text-secondary);
 }
 
-.footer{}
+.main {
+}
+
+.footer {
+}
