@@ -2,8 +2,9 @@ import {
   KeyboardArrowDownRounded,
   KeyboardArrowUpRounded,
 } from "@material-ui/icons";
-import styles from "./CountriesTable.module.css";
 import { useState } from "react";
+import Link from "next/link";
+import styles from "./CountriesTable.module.css";
 
 const orderBy = (countries, value, direction) => {
   if (direction === "asc") {
@@ -73,10 +74,12 @@ const CountriesTable = ({ countries }) => {
         </button>
       </div>
       {orderCountries.map((country, index) => (
-        <div className={styles.row} key={index}>
-          <div className={styles.name}>{country.name.common}</div>
-          <div className={styles.population}>{country.population}</div>
-        </div>
+        <Link href={`/country/${country.cioc}`} key={index}>
+          <div className={styles.row}>
+            <div className={styles.name}>{country.name.common}</div>
+            <div className={styles.population}>{country.population}</div>
+          </div>
+        </Link>
       ))}
     </div>
   );
