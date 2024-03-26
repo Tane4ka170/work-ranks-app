@@ -58,26 +58,63 @@ const CountriesTable = ({ countries }) => {
   return (
     <div>
       <div className={styles.heading}>
+        <div className={styles.heading_flag}></div>
+        {/* Name */}
         <button
           className={styles.heading_name}
           onClick={() => setValueAndDirection("name")}
         >
           <div>Name</div>
-          <SortArrow />
+          {value === "name" && <SortArrow direction={direction} />}
         </button>
+
+        {/* Population */}
         <button
           className={styles.heading_population}
           onClick={() => setValueAndDirection("population")}
         >
           <div>Population</div>
-          <SortArrow direction={direction} />
+          {value === "population" && <SortArrow direction={direction} />}
+        </button>
+
+        {/* Area */}
+        <button
+          className={styles.heading_area}
+          onClick={() => setValueAndDirection("area")}
+        >
+          <div>
+            Area (km<sup style={{ fontSize: "0.5rem" }}>2</sup>)
+          </div>
+          {value === "area" && <SortArrow direction={direction} />}
+        </button>
+
+        {/* Gini */}
+        <button
+          className={styles.heading_gini}
+          onClick={() => setValueAndDirection("population")}
+        >
+          <div>Gini</div>
+          {value === "gini" && <SortArrow direction={direction} />}
         </button>
       </div>
       {orderCountries.map((country, index) => (
         <Link href={`/country/${country.cioc}`} key={index}>
           <div className={styles.row}>
+            <div className={styles.flag}>
+              <img src={country.flags.svg} alt={country.name.common} />
+            </div>
             <div className={styles.name}>{country.name.common}</div>
             <div className={styles.population}>{country.population}</div>
+            <div className={styles.area}>{country.area || 0}</div>
+            <div className={styles.gini}>
+              {Object.entries(country.gini || {}).length > 0 ? (
+                Object.entries(country.gini).map(([year, value]) => (
+                  <div key={year}>{value}%</div>
+                ))
+              ) : (
+                <div>0%</div>
+              )}
+            </div>
           </div>
         </Link>
       ))}

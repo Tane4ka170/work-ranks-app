@@ -1,10 +1,11 @@
 import SelectRounded from "@material-ui/icons/SearchRounded";
 import styles from "./SearchInput.module.css";
+import { SearchRounded } from "@material-ui/icons";
 
 const SearchInput = ({ ...rest }) => {
   return (
     <div className={styles.wrapper}>
-      <SelectRounded />
+      <SearchRounded color="inherit" />
       <input className={styles.input} {...rest} />
     </div>
   );

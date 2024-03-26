@@ -8,24 +8,35 @@ import { useState } from "react";
 export default function Home({ countries }) {
   const [keyword, setKeyword] = useState("");
 
-  const filteredCountries = countries.filter(
-    (country) =>
-      country.name.common.toLowerCase().includes(keyword) ||
-      country.region.toLowerCase().includes(keyword) ||
-      country.subregion.toLowerCase().includes(keyword)
-  );
+  const filteredCountries = countries.filter((country) => {
+    const name = country.name.common.toLowerCase();
+    const region = country.region ? country.region.toLowerCase() : "";
+    const subregion = country.subregion ? country.subregion.toLowerCase() : "";
 
-  const onInputChange = () => {
+    return (
+      name.includes(keyword) ||
+      region.includes(keyword) ||
+      subregion.includes(keyword)
+    );
+  });
+
+  const onInputChange = (e) => {
     e.preventDefault();
+
     setKeyword(e.target.value.toLowerCase());
   };
   return (
     <Layout>
-      <div className={styles.counts}>Found {countries.length} countries</div>
-      <SearchInput
-        placeholder="Filter by Name, Region or Subregion"
-        onChange={onInputChange}
-      />
+      <div className={styles.inputContainer}>
+        <div className={styles.counts}>Found {countries.length} countries</div>
+        <div className={styles.input}>
+          <SearchInput
+            placeholder="Filter by Name, Region or Subregion"
+            onChange={onInputChange}
+          />
+        </div>
+      </div>
+
       <CountriesTable countries={filteredCountries} />
     </Layout>
   );
