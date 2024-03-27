@@ -1,8 +1,26 @@
 import Head from "next/head";
 import styles from "./Layout.module.css";
 import Link from "next/link";
+import { Brightness6Rounded } from "@material-ui/icons";
+import { useEffect, useState } from "react";
 
 const Layout = ({ children, title = "World Ranks" }) => {
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme) {
+      setTheme(storedTheme);
+      document.documentElement.setAttribute("data-theme", storedTheme);
+    }
+  }, []);
+
+  const switchTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme); // Store the theme in localStorage
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -37,6 +55,9 @@ const Layout = ({ children, title = "World Ranks" }) => {
             <rect y="4" width="7.33333" height="4.4" rx="2" fill="#21B6B7" />
           </svg>
         </Link>
+        <button className={styles.themeSwitcher} onClick={switchTheme}>
+          <Brightness6Rounded />
+        </button>
       </header>
       <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>
